@@ -3,6 +3,24 @@
 
 % Preamble  % {{{1
 \documentclass[12pt]{article}
+% Makes title and author left justified:
+\makeatletter
+\renewcommand{\maketitle}{\bgroup\setlength{\parindent}{0pt}
+\begin{flushleft}
+  {\LARGE \@title}
+
+  {\large \@author}
+\end{flushleft}\egroup
+}
+\makeatother
+\usepackage{authblk}
+
+\raggedright
+
+\usepackage{abstract}
+\renewcommand{\absnamepos}{empty}
+
+% \usepackage[none]{hyphenat}
 %\usepackage{achicago}
 \usepackage[a4paper]{geometry}
 \geometry{tmargin=3cm, bmargin=3cm, lmargin=3cm, rmargin=3cm}
@@ -53,17 +71,15 @@
 % JELS formating:
 \usepackage[hang, flushmargin]{footmisc} 
 \renewcommand{\rmdefault}{ptm} % sets default font to Times New Roman
-\renewcommand \thesection{\Roman{section}}
-\renewcommand \thesubsection{\Alph{subsection}}
-\renewcommand \thesubsubsection{\arabic{subsubsection}}
+
 \usepackage{titlesec}
-\titleformat{\section}{\Large\normalfont\scshape}{\thesection.}{.5em}{}
+\titleformat{\section}{\large\bf}{\thesection.}{.5em}{}
 \titleformat{\subsection}{\it}{\thesubsection.}{.5em}{}
 \titleformat{\subsubsection}{\normalfont}{\thesubsubsection.}{.5em}{}
 
-\usepackage[authoryear]{natbib}
-\bibpunct{(}{)}{;}{a}{}{,}
-\bibliographystyle{apalike}
+\usepackage[numbers,super,sort]{natbib}
+\bibliographystyle{EJPH}
+
 \captionsetup[figure]{labelsep=cq, labelfont=it}
 \captionsetup[table]{labelsep=cq}
 \DeclareCaptionLabelSeparator{cq}{:\quad}
@@ -73,7 +89,7 @@
 \begin{document}
 
 % Titlepage  % {{{1
-\title{A Radical Change in Traffic Law: Effects on Fatalities in the Czech
+\title{A Radical Change in Traffic Law: \\Effects on Fatalities in the Czech
   Republic\thanks{I would like to thank to Daniele Bondonio, Brendan Dooley,
     Libor Dušek, Kateřina Holíková, Michael Kohl, participants at the 2010
     Conference on Empirical Legal Studies, the European Law \& Economics
@@ -87,13 +103,15 @@
   }
 }
 
-\author{Josef Montag\thanks{Faculty of Law, Masaryk University and CERGE--EI,
-    Center for Economic Research and Graduate Education--Economics Institute, a
-    joint workplace of Charles University in Prague and the Academy of Sciences
-    of the Czech Republic.  Address: Veveří 70, 611 80 Brno, Czech Republic.
-    Email: josef.montag@law.muni.cz.
-  }
-}
+\author{\textsc{Josef Montag}}
+
+\affil{\small CERGE--EI, Center for Economic Research and Graduate Education--Economics
+  Institute, a joint workplace of Charles University in Prague and the Academy
+  of Sciences of the Czech Republic} 
+
+\affil{ \textbf{Correspondence:} Josef Montag,
+  CERGE-EI, Politických vězňů 7, 111 21 Praha 1, Czech Republic, tel: +420 604
+  715 714, e-mail: josef.montag@cerge-ei.cz}
 
 \date{}
 
@@ -116,22 +134,27 @@
 
 \maketitle
 
-\begin{abstract} 
-  \singlespacing
-  I evaluate the effects of a new road traffic law in the Czech
-  Republic that became effective on July 1, 2006. The law introduced tougher
-  punishments through the introduction of a demerit point system and a manifold
-  increase in fines, together with an augmented authority of traffic police. I
-  find a sharp, 33.3 percent, decrease in accident-related fatalities during the
-  first three post-reform months. This translates into 51 to 204 saved lives
-  with 95 percent certainty.  The decline was, however, temporary; estimates of
-  the effects going beyond the first year are around zero. Unique data on
-  traffic police activity reveal that police resources devoted to traffic law
-  enforcement gradually declined and were shifted towards general law
-  enforcement.
+\renewcommand{\abstractname}{} % clear the title
+\begin{abstract}
+  \textbf{Background:} This study examines short- and long-run effects of a new
+  road traffic law in the Czech Republic that became effective on July 1, 2006.
+  The law introduced tougher punishments through the introduction of a demerit
+  point system and a manifold increase in fines, together with an augmented
+  authority of traffic police.  \textbf{Methods} Identification is based on
+  difference-in-diferences methodology, whereas neighbouring countries serve as
+  a control group. \textbf{Results:} I find a sharp, 33.3 percent, decrease in
+  accident-related fatalities during the first three post-reform months. This
+  translates into 51 to 204 saved lives with 95 percent certainty.  The decline
+  was, however, temporary; estimates of the effects going beyond the first year
+  are around zero. Unique data on traffic police activity reveal that police
+  resources devoted to traffic law enforcement gradually declined and were
+  shifted towards general law enforcement. \textbf{Conclusions:} The law had
+  large, but shortlived effects.  Sustaining enforcement at pre-reform levels
+  may be problematic and the decline in police resources may account for the
+  absence of long-run effects of touger sanctions and the demerit point system.
 \end{abstract}
 
-\section{Introduction} % {{{1
+\section*{Introduction} % {{{1
 \label{sec:intro}
 
 Each year, road traffic accidents (RTAs) result in as many as 50 million
@@ -252,7 +275,7 @@ Section \ref{sec:police} analyzes the behavior of the traffic police around the
 reform and tries to figure out why the effects were shortlived.  Section
 \ref{sec:conclusions} then concludes.
 
-\section{The Change in Czech Road Traffic Law} % {{{1
+\section*{The Change in Czech Road Traffic Law} % {{{1
 \label{sec:the-new-law}
 
 The mechanics of the newly introduced DPS is straightforward and relatively
@@ -321,7 +344,7 @@ offenses can add up to 12 points, resulting in an immediate year-long license
 suspension---and this was accompanied by a general increase in fines and
 augmented police authority. 
 
-\section{Data and Empirical Strategy} % {{{1
+\section*{Data and Empirical Strategy} % {{{1
 \label{sec:data-and-strategy}
 
 \subsection{Descriptive Statistics and Measurement Issues} % {{{2

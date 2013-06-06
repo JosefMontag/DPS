@@ -3,6 +3,7 @@
 
 % Preamble  % {{{1
 \documentclass[12pt]{article}
+\usepackage[english]{babel}% Recommended
 % Makes title and author left justified:
 \makeatletter
 \renewcommand{\maketitle}{\bgroup\setlength{\parindent}{0pt}
@@ -29,7 +30,8 @@
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-
+%\DeclareUnicodeCharacter{0131}{í}
+\DeclareUnicodeCharacter{0301}{}
 
 % \setcounter{secnumdepth}{2}
 \setcounter{tocdepth}{2}
@@ -70,15 +72,45 @@
 
 % JELS formating:
 \usepackage[hang, flushmargin]{footmisc} 
-\renewcommand{\rmdefault}{ptm} % sets default font to Times New Roman
+\usepackage{mathptmx} % Sets default font to Times New Roman
 
 \usepackage{titlesec}
 \titleformat{\section}{\large\bf}{\thesection.}{.5em}{}
 \titleformat{\subsection}{\it}{\thesubsection.}{.5em}{}
 \titleformat{\subsubsection}{\normalfont}{\thesubsubsection.}{.5em}{}
 
-\usepackage[numbers,super,sort]{natbib}
-\bibliographystyle{EJPH}
+
+\usepackage[%bibstyle = nature,
+            style = nejm,
+            % autocite = superscript,
+            maxnames = 3,
+            backend = biber]{biblatex}
+\addbibresource{DPS.bib}
+\DeclareFieldFormat{labelnumberwidth}{#1}
+\renewcommand*{\andothersdelim}{\addcomma\space}
+\DeclareFieldFormat{journaltitle}{\mkbibemph{#1}} % Italic journal title
+\DeclareFieldFormat{pages}{\mkcomprange{#1}} % Compress page ranges
+% Prints short journal titles:
+\renewbibmacro*{journal}{%
+  \iffieldundef{shortjournal}
+    {%
+      \iffieldundef{journaltitle}
+        {}
+        {%
+          \printtext[journaltitle]
+            {%
+              \printfield[titlecase]{journaltitle}%
+              \setunit{\subtitlepunct}%
+              \printfield[titlecase]{journalsubtitle}%
+             }%
+         }%
+    }
+    {\printtext[journaltitle]{\printfield[titlecase]{shortjournal}} }%
+}
+
+\usepackage{csquotes}% Recommended
+% \usepackage[numbers,super,sort]{natbib}
+% \bibliographystyle{EJPH}
 
 \captionsetup[figure]{labelsep=cq, labelfont=it}
 \captionsetup[table]{labelsep=cq}
@@ -90,18 +122,8 @@
 
 % Titlepage  % {{{1
 \title{A Radical Change in Traffic Law: \\Effects on Fatalities in the Czech
-  Republic\thanks{I would like to thank to Daniele Bondonio, Brendan Dooley,
-    Libor Dušek, Kateřina Holíková, Michael Kohl, participants at the 2010
-    Conference on Empirical Legal Studies, the European Law \& Economics
-    Association 2012 Annual Conference, and a workshop at the University of
-    Economics, Prague for valuable comments and suggestions. I very much
-    appreciate discussions with officers at the Czech Traffic Police
-    Headquarters as well as their responses to data requests. The views
-    expressed in this paper as well as any remaining mistakes and imperfections
-    should be attributed only to the author.  This research was funded by Czech
-    Science Foundation grant no. P402/12/2172.
-  }
-}
+  Republic
+}          
 
 \author{\textsc{Josef Montag}}
 
@@ -109,9 +131,12 @@
   Institute, a joint workplace of Charles University in Prague and the Academy
   of Sciences of the Czech Republic} 
 
-\affil{ \textbf{Correspondence:} Josef Montag,
-  CERGE-EI, Politických vězňů 7, 111 21 Praha 1, Czech Republic, tel: +420 604
-  715 714, e-mail: josef.montag@cerge-ei.cz}
+\affil{ \textbf{Correspondence:} Josef Montag, CERGE-EI, Politických vězňů 7,
+  111 21 Praha 1, Czech Republic, tel: +420 604 715 714, fax: +420 224 005 333,
+  e-mail: josef.montag@cerge-ei.cz}
+
+\affil{\textbf{Funding:} This research was funded by Czech Science Foundation
+  grant no.  P402/12/2172.}
 
 \date{}
 
@@ -162,15 +187,15 @@ injuries and more than 1.2 million deaths, making it the ninth leading cause of
 death worldwide---effecting especially young people---and its importance is
 predicted to rise over the next two decades.  Enacting comprehensive laws with
 appropriate penalties and ensuring necessary resources for enforcement are
-acknowledged as top instruments to improve road safety \citep{who_global_2009}.
-However, proper policy choice requires that we understand how alternative
-measures perform when put in place and how they interact with other key
-variables. Exploiting past policy experiments is a natural way to improve our
-understanding of these phenomena.
+acknowledged as top instruments to improve road safety
+\autocite{who_global_2009}.  However, proper policy choice requires that we
+understand how alternative measures perform when put in place and how they
+interact with other key variables. Exploiting past policy experiments is a
+natural way to improve our understanding of these phenomena.
 
 This study evaluates the effects of a new road traffic law in the Czech Republic
 that became effective on July 1, 2006
-\citep{parliamant_of_the_czech_republic_zkon_2005}. It was aimed at improving
+\textcite{parliamant_of_the_czech_republic_zkon_2005}. It was aimed at improving
 road traffic safety through tougher sanctions for traffic offenses and the
 augmented authority of the police. Apart from a manifold increase in fines, the
 most important change introduced by the law was a demerit point system (DPS)
@@ -186,15 +211,15 @@ Table \ref{tab:BApapers} in the Appendix. The common pattern of their findings
 is that the introduction of stricter traffic laws is followed by substantial
 decreases in RTA-related fatalities and other casualties, usually in the realm
 of 20 to 30 percent.\footnote{The study from the United Arab Emirates is an
-  exception as it does not find any effects \citep{mehmood_evaluating_2010}.}
+  exception as it does not find any effects \autocite{mehmood_evaluating_2010}.}
 However, the effects going beyond the initial six months are ambiguous, as many
 of these studies are based on short-term data and there are contradictions among
 those that do look at long-run effects.  For instance, one study for Ireland
 finds lasting effects, but two others do not.\footnote{See
-  \citet{butler_trends_2006,healy_speed_2004,hussain_speeding_2006}.} Similarly
+  \textcite{butler_trends_2006,healy_speed_2004,hussain_speeding_2006}.} Similarly
 in the case of Italy, where one research group finds lasting effects and three
 others do not.\footnote{See
-  \citet{nicita_rational_2009,farchi_evaluation_2007,istat_instituto_nazionale_di_statistica_statistica_2005,zambon_evidence-based_2007,zambon_sustainability_2008}.}
+  \textcite{nicita_rational_2009,farchi_evaluation_2007,istat_instituto_nazionale_di_statistica_statistica_2005,zambon_evidence-based_2007,zambon_sustainability_2008}.}
 Some of the inconsistency in previous findings may be related to research
 design, which is always based on, a within-country, before-after comparison. One
 should therefore be careful before drawing strong inferences, as such results
@@ -286,7 +311,7 @@ has his license revoked for 12 months, automatically and
 immediately.\footnote{The use the of masculine is justified by the fact that
   male drivers' behavior is more often associated with negative externalities
   than females drivers', both in conventional wisdom as well as empirically
-  \citep{chipman_role_1975,steven_d._levitt_dangerous_2001,redelmeier_traffic-law_2003}.}
+  \autocite{chipman_role_1975,steven_d._levitt_dangerous_2001,redelmeier_traffic-law_2003}.}
 The license is returned to the driver upon completion of a driving test and the
 driver continues to carry 12 points on his record. Four points are deleted from
 driver's record after each 12 months during which he does not receive any new
@@ -303,7 +328,7 @@ one, where drivers must only attend a driving course and pass a driving test
 within 30 days after exhausting their point endowment; they also get all their
 points back.\footnote{Drivers in Italy have an endowment of 20 points and they
   lose points upon committing an offense.} The license is only suspended if
-they fail to pass the test.\footnote{\citet{nicita_warning_2012} indeed find
+they fail to pass the test.\footnote{\textcite{nicita_warning_2012} indeed find
   that drivers tend to commit more offenses after zeroing out and reloading
   their points.}
 
@@ -414,15 +439,11 @@ differences in the share of accidents the police never learn about.
 % TABLE \ref{tab:summary1} ABOUT HERE
 \begin{table}[t] 
   \scriptsize  
-  \makebox[\textwidth][c]{
     \begin{threeparttable} 
       \caption{Summary Statistics of RTA Related Casualties (July 2004--June
-        2008)
-      }  
+        2008)}  
       \label{tab:summary1}   
-      \begin{tabular}{
-          l c *{6}{m{1cm}<{\raggedleft}} m{1.4cm}<{\centering}
-        }  
+      \begin{tabular}{ l c *{6}{m{1cm}<{\raggedleft}} m{1.4cm}<{\centering} }  
         \toprule 
         \input{../tables_figures/tab-summary1.csv}
       \end{tabular} 
@@ -440,7 +461,6 @@ differences in the share of accidents the police never learn about.
         and Eurostat. 
       \end{tablenotes} 
     \end{threeparttable} 
-  }
 \end{table} 
 
 Second and more importantly, it is quite likely that these reporting issues have
@@ -541,9 +561,9 @@ traffic was changing and grew faster in the Czech Republic relative to the two
 neighbors. Under such circumstances, it is not feasible to take the number of
 accidents or fatalities in a country as a measure of traffic safety, as risk
 exposure changed.\footnote{For instance, if people decided to double the number
-  of kilometers driven per day, it would not be surprising to see an increase in
-  the number of accidents, while it would be difficult to make any statement as
-  to the implied change in traffic safety.}  I therefore use the number of
+of kilometers driven per day, it would not be surprising to see an increase in
+the number of accidents, while it would be difficult to make any statement as
+to the implied change in traffic safety.}  I therefore use the number of
 fatalities per one million cars as a measure of road safety and the variable of
 interest.
 
@@ -551,8 +571,8 @@ An issue with using the number of cars to adjust for changes in traffic
 intensity can be that the number of kilometers per car or the average number of
 passengers sitting in a car may change. Both variables are very likely
 positively related to fatalities.\footnote{Other things remaining equal, more
-  kilometers driven imply more opportunities for accidents to happen, while more
-  passengers in a car imply more injuries or fatalities in any given accident.}
+kilometers driven imply more opportunities for accidents to happen, while more
+passengers in a car imply more injuries or fatalities in any given accident.}
 According to the statistics from Eurostat (Table \ref{tab:summary2}),
 passenger-kilometers per car declined by almost 5 percent in the Czech Republic
 (kilometers driven grew by 20 percent, but the decrease in the number of
@@ -563,20 +583,20 @@ accident is biased upwards in the case of the Czech Republic after 2006; this
 implies a downward bias of estimates of the effect of the legal change on
 fatalities, i.e.  making it more likely that a---long run---negative effect of
 the law on fatalities will be found.\footnote{This reasoning abstracts from the
-  indirect effect of a higher number of car-kilometers on the probability of an
-  accident working simply through more cars meeting on the road.  Also, new
-  drivers may be more likely to cause an accident, a factor possibly at work in
-  the Czech Republic with its rapidly growing stock of cars.  (On the other hand
-  new cars are safer.) I suggest these factors are likely to be dominated by the
-  mechanics of kilometers driven and passengers sitting in a car.}
+indirect effect of a higher number of car-kilometers on the probability of an
+accident working simply through more cars meeting on the road.  Also, new
+drivers may be more likely to cause an accident, a factor possibly at work in
+the Czech Republic with its rapidly growing stock of cars.  (On the other hand
+new cars are safer.) I suggest these factors are likely to be dominated by the
+mechanics of kilometers driven and passengers sitting in a car.}
 
 \subsubsection{Empirical Model} % {{{3
 
 This paper employs a difference-in-differences (DD) estimator using neighboring
 countries as a control group. Specifically, denote $y$ the outcome of interest,
 then a DD regression can be written as \begin{equation} \label{eq:DD} y_{rt} =
-  \rho_{r} + \boldsymbol{\tau_{t}} + \boldsymbol{\beta'}C_c\boldsymbol{T_{t}} +
-  \boldsymbol{\gamma'}\boldsymbol{x_{rt}} + \epsilon_{rt}, \end{equation} where
+\rho_{r} + \boldsymbol{\tau_{t}} + \boldsymbol{\beta'}C_c\boldsymbol{T_{t}} +
+\boldsymbol{\gamma'}\boldsymbol{x_{rt}} + \epsilon_{rt}, \end{equation} where
 $c$ denotes a country; $r$ denotes a region; $t$ denotes the date; $\rho_{r}$ is
 region $r$'s fixed effect; $\boldsymbol{\tau_{t}}$ is a full set of time effects
 picking up common trends, shocks, and seasonal regularities; $C_c$ is a dummy
@@ -611,23 +631,23 @@ percent of its GDP in 2006, while Germany is the main trading partner with a
 $1/3$ share of Czech exports.  Thus, economic shocks are correlated across these
 three countries.  Finally, there was no substantial policy change in either
 control country.\footnote{I have sent inquiries about changes in traffic law or
-  policies between 2004 and 2008 to the ministries of transport of Austria and
-  Germany. A detailed answer came from the Austrian ministry, listing all
-  changes that occurred in that period. These were limited provisions such as an
-  obligation to carry a reflective vest (2005) or the obligatory use of winter
-  tires (2006, the only change in that year) or an increase of the fine for
-  using a cell phone in 2008. I did not receive any response from the German
-  ministry, however researching publicly available resources did not result in
-  finding any substantial law or policy change in Germany between 2004 and
-  2008.} 
+policies between 2004 and 2008 to the ministries of transport of Austria and
+Germany. A detailed answer came from the Austrian ministry, listing all
+changes that occurred in that period. These were limited provisions such as an
+obligation to carry a reflective vest (2005) or the obligatory use of winter
+tires (2006, the only change in that year) or an increase of the fine for
+using a cell phone in 2008. I did not receive any response from the German
+ministry, however researching publicly available resources did not result in
+finding any substantial law or policy change in Germany between 2004 and
+2008.} 
 
 % FIGURE \ref{fig:fatalcar} ABOUT HERE
 \begin{figure}[t]
-  \caption{Fatalities per $10^6$ Cars (2004--2008)} 
-  \label{fig:fatalcar}
-  \makebox[\textwidth]{ 
-    \includegraphics[scale = .65]{../tables_figures/fig-fatalities.pdf} 
-  }
+\caption{Fatalities per $10^6$ Cars (2004--2008)} 
+\label{fig:fatalcar}
+\makebox[\textwidth]{ 
+  \includegraphics[scale = .65]{../tables_figures/fig-fatalities.pdf} 
+}
 \end{figure}
 
 Since our data span 30 months before the traffic law reform in the Czech
@@ -636,13 +656,13 @@ regression (\ref{eq:DD}). Figure \ref{fig:fatalcar} provides visual evidence
 suggesting similar log-linear trends in fatalities per car before 2006 as well
 as a similarity of seasonal regularities across the Czech Republic, Austria, and
 former West Germany.\footnote{\label{fn:DDR}Because the regions of former East
-  Germany exhibited a very different trend compared to the rest of the countries
-  in the region---namely, fatalities were falling much faster in Eastern Germany
-  than elsewhere---I drop them from the data. As discussed below, I also studied
-  yearly regional-level data from Eurostat, which are available for all
-  neighboring countries. The uniqueness of former East Germany applies not only
-  with respect to the three countries present in our main data, but to two other
-  neighboring countries, Poland and Slovakia, as well as to Hungary.}  Pearson's
+Germany exhibited a very different trend compared to the rest of the countries
+in the region---namely, fatalities were falling much faster in Eastern Germany
+than elsewhere---I drop them from the data. As discussed below, I also studied
+yearly regional-level data from Eurostat, which are available for all
+neighboring countries. The uniqueness of former East Germany applies not only
+with respect to the three countries present in our main data, but to two other
+neighboring countries, Poland and Slovakia, as well as to Hungary.}  Pearson's
 correlation coefficients of log monthly fatalities per million cars between the
 Czech Republic and either control country from January 2004 until June 2006 are
 above 0.7 and are statistically significant at any conceivable level.
@@ -665,12 +685,12 @@ regional-level data on fatalities between 1999 and 2005 for all neighboring
 countries, replacing year-month dummies with year dummies. This data include
 Austria, the Czech Republic, former West Germany, Poland, and
 Slovakia.\footnote{While data are available from 1996, there are frequent
-  revisions, especially in statistics on number of cars, making the earlier data
-  less reliable. Also, the Czech Republic experienced a financial crisis in
-  1997, recovering in 1999. I therefore drop observations before 1999. As
-  discussed in Footnote \ref{fn:DDR}, I excluded the regions of former East
-  Germany, since it exhibits a very different trend from all the other
-  countries.}  Testing the hypothesis that year effects for the Czech Republic
+revisions, especially in statistics on number of cars, making the earlier data
+less reliable. Also, the Czech Republic experienced a financial crisis in
+1997, recovering in 1999. I therefore drop observations before 1999. As
+discussed in Footnote \ref{fn:DDR}, I excluded the regions of former East
+Germany, since it exhibits a very different trend from all the other
+countries.}  Testing the hypothesis that year effects for the Czech Republic
 are equal to zero results in $F(6, 228) = 0.889$.  Running the same test on data
 for that only include the Czech Republic, former West Germany, and Austria
 produces $F(6, 156) = 0.7947$.
@@ -687,11 +707,11 @@ was designed and introduced by the Czech Republic itself, unlike in a random
 assignment. Thus, $\beta$s evaluate the effects of the legal reform in the Czech
 Republic and cannot be thought as an estimate of the effect in an experimental
 sense.\footnote{This self-selection should make it more likely for the treatment
-  to work compared to a randomly assigned treatment.  Also, as apparent from
-  Table \ref{tab:summary1}, Czech roads were more dangerous than German and
-  Austrian roads, the likely benchmarks, and there was no sign of convergence in
-  fatalities per capita before 2006. Thus, some reform might have been be
-  thought necessary.} There can also be a potential endogeneity bias in the
+to work compared to a randomly assigned treatment.  Also, as apparent from
+Table \ref{tab:summary1}, Czech roads were more dangerous than German and
+Austrian roads, the likely benchmarks, and there was no sign of convergence in
+fatalities per capita before 2006. Thus, some reform might have been be
+thought necessary.} There can also be a potential endogeneity bias in the
 sense that the timing of the reform may not be random. A recent experience of an
 unusually high number of serious accidents may make it more likely that a policy
 change will be put in place. This would constitute a bias in the direction of
@@ -919,218 +939,6 @@ remarkably similar. Daily data thus corroborate our main finding of substantial
 immediate effects of the traffic law reform in the Czech Republic and subsequent
 rebound toward pre-reform levels.
 
-\section{Why Were the Effects Shortlived?} % {{{1
-\label{sec:police}
-
-\subsection{Competing Explanations and Some Theory} % {{{2
-
-The short life of the initial effects of the traffic law reform is not too
-surprising. As discussed in the Introduction, this development is consistent
-with earlier experiences in other countries.\footnote{See also Table
-  \ref{tab:BApapers}.} It, however, is a puzzle, and the empirical literature so
-far has not provided much insight into what causes such effects to be
-shortlived. I suspect two major factors: expectations and enforcement. 
-
-A radical change in traffic law may be \emph{ex ante} ambiguous with respect to
-its effects on expected punishment, to which people may overreact, choosing a
-pessimistic scenario and be overly alert
-\citep{alary_ambiguity_2012}.\footnote{It is generally better to be
-  pessimistic in face of ambiguity, because---\emph{ex post}---one will either
-  have been right, or he will be positively surprised.} Then, as the ambiguity
-resolves, and people adjust their priors accordingly, their care is relaxed. In
-addition, the politicians---both those who are for the reform as well as those
-who are against it---the police, and the media may have a tendency exaggerate
-the magnitude of the expected effects.\footnote{The Czech traffic law reform
-  became enforceable during the holiday season, usually characterised by few
-  events in politics, so it may have received even more media attention than
-  otherwise.} Also, people may expect, that tougher punishments generate more
-incentives for the police to enforce the traffic law.  
-
-However, economic theory suggests the opposite---enforcement levels may have
-gone down in the aftermath of the reform. Intuitively, as higher punishments
-improve drivers' behavior, enforcement resources may be reallocated to more
-valuable uses. \citet{tsebelis_abuse_1989} was the first to study the
-relationship between the fine and the effort chosen by the enforcement body. He
-discusses a succinct game-theoretical model producing a counter-intuitive
-prediction: a change in the fine does not influence the number of committed
-infractions, only the probability of capture.\footnote{See also
-  \citet{holler_fighting_1993} and \citet{andreozzi_oscilliations_2002} for a
-  further discussion of Tsebelis' model.}
-
-In an earlier version of this paper,\footnote{It is available online at
-  http://ssrn.com/abstract=1595882 or upon request from the author.} I have
-developed a simple model grasping this scenario in a standard constrained
-optimization setting. I begin with a straightforward deterrence model, drivers
-choose the number of offenses given a monetary constraint. The cost of an
-offense is a fine multiplied by the probability that the offender will be
-intercepted by the police. In the next step, the police is allowed to optimize
-their effort, directly influencing the probability of interception and through
-it the number of offenses the drivers choose to commit. The police dislikes
-offenses as well as effort. The model predicts that the direct deterrence effect
-of a higher fine is followed by relaxed enforcement, which in equilibrium
-offsets some of the former.  
-  
-There are various reasons why this simple model may capture some of the reality.
-Resources allocated to traffic police have alternative uses, within the police
-and within the public sector in general. It is also plausible that when similar
-large-scale changes in the law are adopted, the traffic police may already be
-overstretched. If added deterrence resulting from increased punishments leads to
-an improvement in road-safety indicators, the levels of enforcement may then be
-adjusted downward. This may be an improvement from the social perspective.
-Finally, politicians may lose interest in traffic safety, especially if things
-improve initially. If they later revert, there may not be much to be done for
-them as the law has been passed already.
-
-\subsection{The Data on Police Activity} % {{{2
-
-% FIGURE \ref{fig:police} ABOUT HERE
-\begin{figure}[t] 
-  \caption{Traffic police manpower and man-hours in enforcement by Czech regions
-    in 2006 and 2007
-  }
-  \label{fig:police} 
-  \makebox[\textwidth]{ 
-    \includegraphics[width=19cm, trim=0 0 0 5mm]
-    {../tables_figures/police_activity}  
-  }
-\end{figure}
-
-This subsection presents an analysis of a unique dataset parsed from internal
-monthly regional-level information on traffic police activity in 2006 and 2007 I
-have obtained from the Czech Traffic Police Headquarters. The original source of
-the information are the local police directorates, who report to the
-Headquarters.
-
-The thrust of the of the findings is captured in Figure \ref{fig:police}, which
-plots the development of manpower and man-hours in enforcement as well as the
-number of hours of speed gun use by the traffic police across Czech regions. The
-number of policemen assigned to enforcement a exhibits general upward pattern
-over 2006 and 2007. Despite that, the man-hours worked by traffic policemen were
-declining in all regions but one.  The number of hours the police spent behind
-speed guns was falling even more rapidly.\footnote{Certainly the enforcement
-  infrastructure was improving in recent years. Many static cameras were put in
-  place, so that drivers' speed may be measured with higher frequency. However,
-  speeding captured by static radars gets recorded, and only a subset proceeds
-  through the administrative procedure and possibly results in punishment of the
-  driver, with a delay.}
-
-% TABLE \ref{tab:police.activity.measures} ABOUT HERE
-\begin{sidewaystable}[p] 
-  \footnotesize  
-  \makebox[23cm]{
-    \begin{threeparttable}
-      \caption{Czech Traffic Police Activity in 2006 and 2007}
-      \label{tab:police.activity.measures} 
-      \input{../tables_figures/tab.police.activity.measures}
-      \begin{tablenotes} \scriptsize 
-      \item \hspace{-1.8mm} \textsc{Notes}: The outcome variables are in logs.
-        The 1\superscript{st} quarter post-reform is the omitted category. All
-        specifications include region dummies. Deseasoning is done using a
-        coefficient for the second half-year estimated on country-level
-        half-yearly data on man-hours in enforcement from 2005 to 2008.
-        Huber-White standard errors clustered on regions are in parentheses:
-        $\dagger < 0.1$.
-      \item \hspace{-1.8mm} \textsc{Sources}: Headquarters of the Police of the
-        Czech Republic. 
-      \end{tablenotes} 
-    \end{threeparttable}
-  } 
-\end{sidewaystable}
-
-Tables \ref{tab:police.activity.measures} and
-\ref{tab:police.alternative.activities} study traffic police activity in more
-detail. I simply regress the logs of police activity indicators on
-year$\times$quarter dummies, where the second quarter of 2006 is the omitted
-category. One may worry that some variability may be driven by seasonal
-regularities, an issue hard to deal with properly with two years of data. I use
-half-yearly country-level data on man-hours in enforcement ranging from 2005 to
-2008 and estimate a coefficient for a second half-year, which I then use to
-deseason the monthly data on police activity.
-
-% TABLE \ref{tab:police.alternative.activities} ABOUT HERE
-\begin{sidewaystable}[p] 
-  \makebox[23cm]{ \footnotesize  
-    \begin{threeparttable}   
-      \caption{Czech Traffic Police Alternative Activities in 2006 and 2007}
-      \label{tab:police.alternative.activities} 
-      \input{../tables_figures/tab.pol.alternative.activities}
-      \begin{tablenotes}\scriptsize
-      \itemNoindent \textsc{Notes}: The outcome variables are in logs. The
-        1\superscript{st} quarter post-reform is the omitted category. All
-        specifications include region dummies. Deseasoning is done using a
-        coefficient for the second half-year estimated on country-level
-        half-yearly data on man-hours in enforcement from 2005 to 2008.
-        Huber-White standard errors clustered on regions are in parentheses:
-        $\dagger < 0.1$.
-      \itemNoindent \textsc{Sources}: Headquarters of the Police of the
-        Czech
-        Republic. 
-      \end{tablenotes} 
-    \end{threeparttable}
-  } 
-\end{sidewaystable}
-
-Column (1) of Table \ref{tab:police.activity.measures} suggests that the total
-number of policemen remained constant throughout 2006 and 2007, while the number
-of policemen in enforcement was slowly increasing as seen in column (2) and
-Figure \ref{fig:police}. In other words, there is no sign that fewer policemen
-were available for traffic law enforcement after June 2006.\footnote{Also, as
-  noted in Section \ref{sec:the-new-law}, the municipal police was newly
-  authorized to stop vehicles and fine offenders.} Nonetheless, the total amount
-of traffic police man-hours dedicated to enforcement was gradually declining
-from the third quarter of 2006 onwards. The declines are statistically
-significant at 5 the percent level and the pace was accelerating. Since
-man-hours in enforcement are usually smaller in the second half of the year
-(although fatalities are higher), the results for deseasoned data places the
-beginning of the decline to the first quarter of 2007.  Nonetheless, there were
-almost 9\% fewer traffic policemen seen on the streets and roads in the first
-quarter following the introduction of the new traffic law compared to the
-preceding one, and the decline came close to 24\% by the end of 2007. The decay
-is even more dramatic in the case of speed gun hours by the traffic police.  The
-number of targeted actions---that is the temporarily increased presence of
-traffic police in a specific area with the purpose to increase the number of
-checks and the salience of police presence---remained steady through 2006, then
-declined in the first half of 2007 and later increased substantially. The
-presence of the police in the media decreased in 2007, as it was probably
-unusually high in 2006. 
-
-Table \ref{tab:police.alternative.activities} looks at activities of the traffic
-police other than direct traffic law enforcement. Specifically, I looked at the
-numbers of persons and cars at large found, and the numbers of suspicious items
-and persons checked. Although most coefficients are not statistically
-significant, there seems to be a general increase in these measures, despite
-fewer working hours in enforcement. This suggests that the traffic police may
-have given higher priority to general law enforcement activities relative to
-pure enforcement of traffic rules.
-
-\subsection{What Does (Not) the Traffic Police Activity Explain?} % {{{2
-
-In sum, the police data reveal that enforcement levels were declining in the
-aftermath of the traffic law reform and suggest that traffic police may have put
-a higher share of resources into general law enforcement and police work and
-away from the direct enforcement of traffic rules. This development is in line
-with the outlined theory, however one should be careful before interpreting this
-result strictly causally. Only two years of data are available, so we cannot
-rule out preexisting trends or factors driving the changes in police data other
-than the change in the traffic law.\footnote{A note of caution should be stated
-  here: One could be tempted to use the data on traffic police activity as an
-  explanatory variable to check whether it explains the development in
-  fatalities in the Czech Republic after July 1, 2006.  However, this would
-  require that traffic police activity is exogenous to accidents and
-  casualties---an unlikely assumption. Doing this would lead to results lacking
-  proper interpretation. I therefore present only a descriptive analysis of
-  police activity.}
-
-Be it coincidence or not, can changes in police enforcement explain  the
-development of fatalities after the change in Czech road traffic law? It can
-hardly do so with respect to the sharp short-run decline in fatalities as the
-police presence on the roads was apparently lower during the third quarter of
-2006, relative to first half of that year. This effect is more likely to be
-driven by uncertainty in expectations that were possibly misjudged due to the
-high salience of the change as well as the intense media coverage and
-long-lasting controversies regarding the DPS. On the other hand, systematically
-lower enforcement levels after the law was introduced may play a role in
-explaining the absence of long-run effects.
 
 \section{Conclusions} % {{{1 
 \label{sec:conclusions} 
@@ -1194,21 +1002,43 @@ penalties fix the problem may take enforcement out of the focus and the police
 and/or politicians may have incentives to reduce enforcement, especially if
 things seem to go well initially. This this is consistent with the data on
 police activity and may help explain the absence of any long-run effects.
+  
+\section*{Acknowledgements}
 
-\bibliography{DPS.bib}
+I would like to thank to Daniele Bondonio, Brendan Dooley, Libor Dušek, Kateřina
+Holíková, Michael Kohl, participants at the 2010 Conference on Empirical Legal
+Studies, the European Law \& Economics Association 2012 Annual Conference, and a
+workshop at the University of Economics, Prague for valuable comments and
+suggestions. I very much appreciate discussions with officers at the Czech
+Traffic Police Headquarters as well as their responses to data requests.  Parts
+of this paper were written at Cornell University and Masaryk University. I
+highly appreciate the support I have received from those institutions as well as
+from CERGE-EI. The views expressed in this paper as well as any remaining
+mistakes and imperfections should be attributed only to the author. 
+
+% This research was partially funded by
+    % dissertation a fellowship at University of Turin, by the Education for
+    % Competitiveness Operational Programme project no.  CZ.1.07/2.3.00/30.0009,
+    % co-financed by the European Social Fund and the state budget of the Czech
+    % Republic and by the Czech Science Foundation grant no. P402/12/2172.  Opinions expressed herein are mine and do not
+    % represent any of the mentioned institutions. All remaining errors are the
+    % responsibility of the author. 
+\printbibliography
+% \bibliography{DPS.bib}
 
 % \newpage
+
 
 % \section*{Figures} % {{{1
 
 \newpage
 
-% \section*{Tables} % {{{1
+\section*{Tables} % {{{1
 
 \FloatBarrier
 \appendix
 
-\section*{Appendix} % {{{1
+\section*{Appendix} {{{1
 \setcounter{table}{0}
 \renewcommand\thetable{A.\arabic{table}}
 
